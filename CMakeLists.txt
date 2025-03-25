@@ -7,7 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_executable(${EXE_NAME} src/TicTacToe.cpp)
 add_subdirectory(src)
-add_subdirectory(includes)
+add_subdirectory(include)
+add_subdirectory(net)
+add_subdirectory(vendor/GameNetworkingSockets)
 
 target_compile_options(${EXE_NAME} PRIVATE -Wall -Wextra)
 

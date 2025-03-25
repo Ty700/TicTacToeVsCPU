@@ -1,10 +1,12 @@
 #include "Player.h"
 #include "Game.h"
 #include "GameConfig.h"
+
 #include <iostream>
 #include <memory>
 
-int main(void){
+int main(void)
+{
 
     /* Game settings */
     auto gameConfiguration = std::make_shared<GameConfig>();

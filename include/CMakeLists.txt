@@ -1,0 +1,9 @@
+set(TICTACTOE_HEADERS 
+    "${CMAKE_CURRENT_SOURCE_DIR}/AIMoves.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Game.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/GameConfig.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Player.h"
+)
+
+target_include_directories(${EXE_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_sources(${EXE_NAME} PRIVATE ${TICTACTOE_HEADERS})

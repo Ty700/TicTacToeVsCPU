@@ -1,0 +1,15 @@
+set( NETWORKING_HEADERS
+    "${CMAKE_CURRENT_SOURCE_DIR}/Client.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/NetworkingUtils.h"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Server.h"
+)
+
+set( NETWORKING_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/Client.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/NetworkingUtils.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Server.cpp"
+)
+
+
+target_include_directories(${EXE_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_sources(${EXE_NAME} PRIVATE ${NETWORKING_HEADERS} ${NETWORKING_SOURCES})
