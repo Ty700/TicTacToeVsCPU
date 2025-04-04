@@ -71,11 +71,11 @@ python3 build.py -c
    * Enter a number 1-9 to select where to place your symbol
    * The board positions are numbered
 ```
- 1 | 2 | 3
- ---------
- 4 | 5 | 6
- ---------
- 7 | 8 | 9
+	1 | 2 | 3
+	--+---+--
+	4 | 5 | 6
+	--+---+--
+	7 | 8 | 9
 ```
 
 3. The game ends when either:
@@ -101,22 +101,49 @@ Replace `SERVER_IP_ADDRESS` with the IP address of the server.
 ## Screenshots
 
 #### Game Setup:
-<img src="img/Screenshot%20from%202025-03-20%2010-52-15.png" width="250" alt="Game Setup">
+
+<img src="img/Screenshot%20from%202025-03-20%2010-52-15.png" width="275" alt="Game Setup">
 
 #### Gameplay:
 <img src="img/Screenshot%20from%202025-03-20%2010-53-13.png" width="200" alt="Gameplay">
 
-## File Structure
-* tictactoe.cpp: main program entry point
-* Game.cpp/h: Handles the game logic and board state
-* GameConfig.cpp/h: Manages game setup and configuration
-* Player.cpp/h: Defines player attributes and behaviors
-* AIMoves.cpp/h: Contains AI algorithms for different difficulty levels
-* Client.cpp/h: Handles network client functionality
-* Server.cpp/h: Handles network server functionality
-* NetworkingUtils.cpp/h: Common networking utilities
+#### Game Statistics CSV 
 
-## AI Implementation
+<img src="img/Screenshot from 2025-04-03 23-32-26.png" width="500" alt="Gameplay">
+
+#### Game Statistics Text 
+
+<img src="img/Screenshot from 2025-04-03 23-32-46.png" width="250" alt="Gameplay">
+
+## File Structure
+
+- tictactop.cpp: main program entry point
+
+- Game.cpp/h: Handles the game logic and board state
+
+- GameConfig.cpp/h: Manages game setup and configuration
+
+- Player.cpp/h: Defines player attributes and behaviors
+
+- AIMoves.cpp/h: Contains AI algorithms for different difficulty levels
+
+- GameStats.cpp/h: Logic behind the tracking of game statistics 
+
+- GameStatsDB.csv: The CSV file contains the following columns:
+
+	- Game ID 
+
+	- Player One Name 
+
+	- Player Two Name
+	
+	- Winner Name 
+
+	- Whether Winner is AI (T/F)
+
+	- Winner Symbol (X/O)
+ 
+## AI Implementation  
 
 ### Easy Mode
 * Makes completely random moves with no strategy.
@@ -130,16 +157,62 @@ Replace `SERVER_IP_ADDRESS` with the IP address of the server.
   5. Makes a random move if none of the above applies
 
 ### Hard Mode
-* Implements the Minimax algorithm to make optimal moves, resulting in an unbeatable gameplay. The AI will either win or force a draw.
 
-## Network Implementation
-The game uses Valve's GameNetworkingSockets library, which provides:
-* Reliable and unreliable message delivery over UDP
-* Automatic reconnection
-* Encryption
-* Traffic prioritization
+- Implements the Minimax algorithm to make optimal moves, resulting in an unbeatable gameplay. The AI with either win or force a draw.
+  
+## Game Statistics (NEW!!)
+
+- The game now includes a comprehensive statistics tracking system that records the results of each game played. This feature allows players to review their game history and track performance over time.
+
+### Features
+
+1. Automatically tracks all game results
+
+2. Records player names, and winner information
+
+3. Maintains both a structured CSV database and human-readable game logs 
+
+### Implementation Details 
+
+- Game statistics are updated automatically at the end of each game. 
+
+- The system handles file creation, reading, and writing operations with robous error handling.
+
+- Data integrity is mainted through careful file state management
+
+### Viewing Statistics 
+
+- Players can view their game history by opening the GameStats.txt file, which provides detailed information about each game in an easy-to-read format.
 
 ## Future Improvements
-* Game statistics Tracking
-* Windows/Mac Compatibility
-* GUI???
+
+- **Network Play**
+
+- **Master Game Stats File**:
+  - Create a comprehensive statistical dashboard that aggregates data from all played games
+  - Generate visual representations of win rates and game patterns using graphical libraries
+  - Track player progression over time with performance trends and improvement metrics
+  - Implement filterable views to analyze statistics by different parameters (time period, player combinations, etc.)
+  - Export statistics in multiple formats (CSV, PDF, PNG) for sharing or external analysis
+  - Add session-based statistics to compare performance across different gaming sessions
+  - Calculate and display advanced metrics like average moves per game, most common winning patterns, and position heat maps
+
+	- **AI vs Human Win Rate**: Track and analyze the performance of AI players compared to human players to measure AI effectiveness and difficulty levels.
+
+	- **X vs O Win Rate**: Determine if there's a statistical advantage to playing as X or O to balance game fairness.
+
+	- **First Player Advantage Analysis**: Measure win rates based on turn order to quantify the first-move advantage and potentially implement handicap features.
+
+- **GUI??**
+
+- **Windows Build option**
+
+## Learnings
+
+### Data Structure Optimizations
+- Implementing a bitmap to track player moves proved more efficient than individual character tracking. This insight came after having to convert all character representations to `std::string` to support the GameStats system, highlighting how initial design choices impact later extensibility.
+- The bitmap approach enables cleaner game state representation: positions can be checked with simple bit operations, and display logic becomes more straightforward (e.g., "if position bit is 0, display X; otherwise display O").
+
+### Coding Style Evolution
+- Throughout this project (which expanded beyond its initial scope as I explored different aspects of C++), my coding style transitioned from K&R to Allman bracing style.
+- While the adjustment still feels somewhat unnatural, adopting the Allman style aligns with my workplace standards, making this project a valuable opportunity to build new muscle memory for professional coding practices.
